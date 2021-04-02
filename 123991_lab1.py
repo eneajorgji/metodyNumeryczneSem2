@@ -11,9 +11,11 @@ def f(x):
 
 def bisection_method(f, a, b, eps=10 ** -6, max_iter=100):
     c = (a + b) / 2.0
-    number_iter = 0
+    count_iters = 0
 
-    while (b - a) / 2.0 > eps and number_iter < max_iter:
+    while (b - a) / 2.0 > eps and count_iters < max_iter:
+        count_iters += 1
+
         if f(c) == 0:
             return c
         elif f(a) * f(c) < 0:
@@ -22,8 +24,7 @@ def bisection_method(f, a, b, eps=10 ** -6, max_iter=100):
             a = c
         # c = (a + b) / 2.0
 
-        number_iter += 1
-        print(number_iter)
+        print(count_iters)
 
     return c
 
@@ -36,9 +37,9 @@ print(bisection_method(f, 1.5, 3, eps=10 ** -6))
 
 def bisection_method_vis(f, a, b, eps=10 ** -4, max_iter=100):
     c = (a + b) / 2.0
-    number_iter = 0
+    count_iters = 0
 
-    while (b - a) / 2.0 > eps and number_iter < max_iter:
+    while (b - a) / 2.0 > eps and count_iters < max_iter:
         if f(c) == 0:
             return c
         elif f(a) * f(c) < 0:
@@ -46,19 +47,19 @@ def bisection_method_vis(f, a, b, eps=10 ** -4, max_iter=100):
         else:
             a = c
 
-        number_iter += 1
+        count_iters += 1
         # print(number_iter)
 
     return c
 
 
-answer = bisection_method(f, 1.5, 3, eps=10 ** -6)
+result = bisection_method(f, 1.5, 3, eps=10 ** -6)
 # print(bisection_method_vis(f, 1.5, 3, eps=10 ** -6))
-print(answer)
+print(result)
 
 x = np.linspace(1.5, 3, 100)
 plt.plot(x, f(x))
-plt.axvline(answer)
+plt.axvline(result)
 plt.grid()
 plt.show()
 
@@ -93,4 +94,13 @@ def golden_section(f, a, b, eps=10 ** -4, max_iter=100):
     return c
 
 
+result = golden_section(f2, 0, 5)
 print(golden_section(f2, 0, 5))
+
+# TODO create def golden_section_vis(..)
+
+x = np.linspace(0, 5, 100)
+plt.plot(x, f2(x))
+plt.axvline(result)
+plt.grid()
+plt.show()

@@ -10,7 +10,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\lab_1.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\test_lab_1.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\zad2.py">
           <value>
             <Attribute>
               <option name="separator" value="," />
