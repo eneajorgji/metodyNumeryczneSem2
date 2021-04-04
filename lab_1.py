@@ -2,33 +2,71 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# Zadanie 2
-def f2(x):
-    return (x - 2) ** 2 - 1
+def f(x):
+    return (x - 2) ** 3 - x ** 2 + 2 * x
 
 
-def golden_section(f, a, b, eps=10 ** -4, max_iter=100):
-    k = (5 ** 0.5 - 1) / 2
-
+def bisection_method(f, a, b, eps=10 ** -6, max_iter=100):
+    c = (a + b) / 2.0
     count_iters = 0
-    # x_left = b - (b - a) * k
-    # x_right = a + (b - a) * k
+    x_value = [a, b]
 
-    while abs(b - a) > eps and count_iters < max_iter:
+    while (b - a) / 2.0 > eps and count_iters < max_iter:
         count_iters += 1
 
-        x_left = b - (b - a) * k
-        x_right = a + (b - a) * k
-
-        if f(x_left) < f(x_right):
-            b = x_right
+        if f(c) == 0:
+            return c
+        elif f(a) * f(c) < 0:
+            b = c
+        elif f(a) * f(c) > + 0:
+            a = c
         else:
-            a = x_left
+            None
 
-        c = (x_left + x_right) / 2
-        print(count_iters, c)
+        c = (a + b) / 2.0
+        x_value.append(c)
 
+    print(x_value)
     return c
 
 
-print(golden_section(f2, 0, 5))
+print("Metoda Polowienia ", bisection_method(f, 1.5, 3, eps=10 ** -6))
+
+
+#########################################
+# Zadanie 1 + wizualizacja
+
+def bisection_method_vis(f, a, b, eps=10 ** -4, max_iter=100):
+    c = (a + b) / 2.0
+    count_iters = 0
+    x_value = [a, b]
+
+    while (b - a) / 2.0 > eps and count_iters < max_iter:
+        count_iters += 1
+
+        if f(c) == 0:
+            return c
+        elif f(a) * f(c) < 0:
+            b = c
+        elif f(a) * f(c) > + 0:
+            a = c
+        else:
+            None
+        c = (a + b) / 2.0
+        x_value.append(c)
+
+    print(x_value)
+    x = np.linspace(1.5, 3, 100)
+    plt.plot(x, f(x))
+
+    for i in x_value:
+        plt.axvline(i, c="r", ls="--")
+
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.title("x = 2.000000238418579")
+    plt.show()
+    return c
+
+
+result = bisection_method_vis(f, 1.5, 3, eps=10 ** -6)

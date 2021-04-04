@@ -12,6 +12,7 @@ def f(x):
 def bisection_method(f, a, b, eps=10 ** -6, max_iter=100):
     c = (a + b) / 2.0
     count_iters = 0
+    x_value = [a, b]
 
     while (b - a) / 2.0 > eps and count_iters < max_iter:
         count_iters += 1
@@ -20,12 +21,15 @@ def bisection_method(f, a, b, eps=10 ** -6, max_iter=100):
             return c
         elif f(a) * f(c) < 0:
             b = c
-        else:
+        elif f(a) * f(c) > + 0:
             a = c
-        # c = (a + b) / 2.0
+        else:
+            None
 
-        print(count_iters)
+        c = (a + b) / 2.0
+        x_value.append(c)
 
+    # print(x_value)
     return c
 
 
@@ -38,30 +42,39 @@ print(bisection_method(f, 1.5, 3, eps=10 ** -6))
 def bisection_method_vis(f, a, b, eps=10 ** -4, max_iter=100):
     c = (a + b) / 2.0
     count_iters = 0
+    x_value = [a, b]
 
     while (b - a) / 2.0 > eps and count_iters < max_iter:
+        count_iters += 1
+
         if f(c) == 0:
             return c
         elif f(a) * f(c) < 0:
             b = c
-        else:
+        elif f(a) * f(c) > + 0:
             a = c
+        else:
+            None
+        c = (a + b) / 2.0
+        x_value.append(c)
 
-        count_iters += 1
-        # print(number_iter)
+    # print(x_value)
 
+    x = np.linspace(1.5, 3, 100)
+    plt.plot(x, f(x))
+
+    for i in x_value:
+        plt.axvline(i, c="r", ls="--")
+
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.title("x = 2.000000238418579")
+    plt.grid(True)
+    plt.show()
     return c
 
 
-result = bisection_method(f, 1.5, 3, eps=10 ** -6)
-# print(bisection_method_vis(f, 1.5, 3, eps=10 ** -6))
-print(result)
-
-x = np.linspace(1.5, 3, 100)
-plt.plot(x, f(x))
-plt.axvline(result)
-plt.grid()
-plt.show()
+result = bisection_method_vis(f, 1.5, 3, eps=10 ** -6)
 
 
 #########################################
@@ -70,7 +83,7 @@ def f2(x):
     return (x - 2) ** 2 - 1
 
 
-def golden_section(f, a, b, eps=10 ** -4, max_iter=100):
+def golden_section(f, a, b, eps=10 ** -5, max_iter=100):
     k = (5 ** 0.5 - 1) / 2
 
     count_iters = 0
@@ -89,7 +102,6 @@ def golden_section(f, a, b, eps=10 ** -4, max_iter=100):
             a = x_left
 
         c = (x_left + x_right) / 2
-        print(count_iters, c)
 
     return c
 

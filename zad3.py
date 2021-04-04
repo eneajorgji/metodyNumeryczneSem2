@@ -1,10 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def f3():
-    return
 
-def newton(f, x0, eps=10 ** -4, max_iter=100):
+def f3(x):
+    return (x - 2) ** 2 - 1
 
-    pass
-    # return x1
+
+def dxf(f3, x0):
+    h = 10 ** -7
+    return float(f3(x0 + h) - f3(x0)) / h
+
+
