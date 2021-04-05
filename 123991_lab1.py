@@ -160,7 +160,7 @@ print(golden_section_vis(f2, 0, 5))
 
 
 # TODO Usun tego
-min_f = optimize.golden(f2, brack=(0, 5), tol=10 ** -4)
-bisec = optimize.bisect(f, 1.5, 3, xtol=10 ** -6)
-print("to jest bisection of F", bisec)
-print("To jest min_f", min_f)
+# min_f = optimize.golden(f2, brack=(0, 5), tol=10 ** -4)
+# bisec = optimize.bisect(f, 1.5, 3, xtol=10 ** -6)
+# print("to jest bisection of F", bisec)
+# print("To jest min_f", min_f)
