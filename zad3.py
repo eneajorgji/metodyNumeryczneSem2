@@ -12,16 +12,19 @@ def dfdx(x):
     return float(f2(x + h) - f2(x)) / h
 
 
-def newton(f, x, eps=10 ** -4, max_iter=100):
+def newton(f, x0, eps=10 ** -4, max_iter=100):
     count_iters = 0
 
-    while abs(f(x)) > eps and count_iters < max_iter:
+    while abs(f(x0)) > eps and count_iters < max_iter:
         count_iters += 1
 
-        x = x - float(f(x)) / dfdx(x)
+        if count_iters >= max_iter:
+            None
+        else:
+            x1 = x0 - float(f(x0)) / dfdx(x0)
+            x0 = x1
 
-    print(count_iters)  # TODO Usun to pod koniec
-    return x
+    return x1
 
 
 print(newton(f2, 4))
