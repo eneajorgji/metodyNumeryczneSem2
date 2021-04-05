@@ -74,6 +74,4 @@ def golden_section_vis(f, a, b, eps=10 ** -4, max_iter=100):
 
 print(golden_section_vis(f2, 0, 5))
 
-# TODO: USUN t
-print("golden", golden_section(f2, 0, 5))
-print("golden vis", golden_section_vis(f2, 0, 5))
+
