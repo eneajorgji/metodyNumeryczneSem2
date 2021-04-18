@@ -6,40 +6,45 @@ def f(x):
     return x ** 3
 
 
-def rectangle_method(f, a, b, step):
-    period = int((b - a) / step)
-    x = np.linspace(a + step / 2, b - step / 2, period)
-    return step * np.sum(f(x))
+########################################
+# Zadanie 2
 
-
-def rectangle_method_vis(f, a, b, step):
+def trapezoidal_method(f, a, b, step):
     period = int((b - a) / step)
     x = np.linspace(a, b, period + 1)
     y = f(x)
+    y_right = y[1:]
+    y_left = y[:-1]
+    dx = (b - a) / period
+    integral = (dx / 2) * sum(y_right + y_left)
+    return integral
+
+
+########################################
+# Zadanie 2 + wizualizacja
+
+def trapezoidal_method_vis(f, a, b, step):
+    fig = plt.figure()
+    period = int((b - a) / step)
+    x = np.linspace(a, b, period + 1)
+    y = f(x)
+
     n = 10
-    X = np.linspace(a, b, n * period + 1)
+    X = np.linspace(a, b, n * period)
     Y = f(X)
 
-    fig = plt.figure()
-
     plt.plot(X, Y)
-    plt.axvline(a, color='r', ls='--')
-    plt.axvline(b, color='r', ls='--')
-    plt.axhline(a, b, color='r')
-    x_mid = (x[:-1] + x[1:]) / 2  # Midpoints
-    y_mid = f(x_mid)
-    plt.plot(a, b)
-    # plt.plot(x_mid, y_mid, 'b.')
-    plt.bar(x_mid, y_mid, width=(b - a) / period, facecolor='None', edgecolor='r', linewidth=1)
-    plt.title(f"Rectangle Method = {period}")
+
+    for i in range(period):
+        xs = [x[i], x[i], x[i + 1], x[i + 1]]
+        ys = [0, f(x[i]), f(x[i + 1]), 0]
+        plt.fill(xs, ys, 'b', edgecolor='b', alpha=0.2)
 
     plt.grid(True, ls='--')
     plt.show()
+
     return fig
 
 
-# print(midpoint(f, 0, 2, 0.5))
-# print("20 przedzialow =>", midpoint_1(f, 0, 2, 20))
-print("this is rectangle method =>", rectangle_method(f, 0, 2, 0.003))
-print("this is rectangle method =>", rectangle_method_vis(f, 0, 2, 0.2))
-# print("This is the last rectangle rule =>", rectangle_rule(f, 0, 2, 20))
+print("This is Trapezoidal method", trapezoidal_method(f, 0, 2, 0.1))
+print("This is Trapezoidal method VISUALIZATION", trapezoidal_method_vis(f, 0, 2, 0.5))

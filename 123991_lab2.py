@@ -13,19 +13,17 @@ def f(x):
 
 
 def rectangle_method(f, a, b, step):
-    # iterations = (b - a) / step
-    integral = 0
-    # for i in range(iterations):
-    value_b_minus_a = 0
-    while value_b_minus_a < b - a:
-        value_b_minus_a += step
-        integral += step * f(a + (value_b_minus_a))
-    print("Integral is equal to: ", integral)
+    period = int((b - a) / step)
+    x = np.linspace(a + step / 2, b - step / 2, period)
+    integral = step * np.sum(f(x))
     return integral
 
 
 print("Zadanie 1 =>", rectangle_method(f, 0, 2, 0.1))
 
+
+########################################
+# Zadanie 1 + wizualizacja
 
 def rectangle_method_vis(f, a, b, step):
     period = int((b - a) / step)
@@ -40,10 +38,9 @@ def rectangle_method_vis(f, a, b, step):
     plt.plot(X, Y)
     plt.axvline(a, color='r', ls='--')
     plt.axvline(b, color='r', ls='--')
-    x_mid = (x[:-1] + x[1:]) / 2  # Midpoints
+    x_mid = (x[:-1] + x[1:]) / 2
     y_mid = f(x_mid)
     plt.plot(a, b)
-    # plt.plot(x_mid, y_mid, 'b.')
     plt.bar(x_mid, y_mid, width=(b - a) / period, facecolor='None', edgecolor='r', linewidth=1)
     plt.title(f"Rectangle Method step = {step}")
 
