@@ -1,16 +1,43 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import numpy as np
+from matplotlib import pyplot as plt
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def f(x):
+    return x ** 3
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def midpoint_1(f, a, b, n):
+    h = float(b - a) / n
+    x = np.linspace(a + h / 2, b - h / 2, n)
+    plt.plot(x, f(x))
+    plt.show()
+    return h * np.sum(f(x))
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+def rectangle_method(f, a, b, step):
+    period = int((b - a) / step)
+    x = np.linspace(a + step / 2, b - step / 2, period)
+    return step * np.sum(f(x))
+
+
+def rectangle_method_vis(f, a, b, step):
+    # fig = plt.figure()
+
+    period = int((b - a) / step)
+    x = np.linspace(a + step / 2, b - step / 2, period)
+
+    plt.axvline(a, ls='--', color='red')
+    plt.axvline(b, ls='--', color='red')
+
+    plt.plot(x, f(x))
+    plt.grid(True, ls='--')
+    plt.show()
+
+    return step * np.sum(f(x))
+
+
+# print(midpoint(f, 0, 2, 0.5))
+# print("20 przedzialow =>", midpoint_1(f, 0, 2, 20))
+print("this is rectangle method =>", rectangle_method(f, 0, 2, 0.003))
+print("this is rectangle method =>", rectangle_method_vis(f, 0, 2, 0.003))
+# print("This is the last rectangle rule =>", rectangle_rule(f, 0, 2, 20))
