@@ -59,6 +59,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\test_lab_2.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\zad2.py">
           <value>
             <Attribute>
