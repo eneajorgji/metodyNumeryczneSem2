@@ -25,6 +25,9 @@ def trapezoidal_method(f, a, b, step):
 
 def trapezoidal_method_vis(f, a, b, step):
     fig = plt.figure()
+    plt.axvline(a, color='r', ls='--')
+    plt.axvline(b, color='r', ls='--')
+
     period = int((b - a) / step)
     x = np.linspace(a, b, period + 1)
     y = f(x)
@@ -38,7 +41,7 @@ def trapezoidal_method_vis(f, a, b, step):
     for i in range(period):
         xs = [x[i], x[i], x[i + 1], x[i + 1]]
         ys = [0, f(x[i]), f(x[i + 1]), 0]
-        plt.fill(xs, ys, 'b', edgecolor='b', alpha=0.2)
+        plt.fill(xs, ys, edgecolor='r', fill=None, linewidth=1)
 
     plt.grid(True, ls='--')
     plt.show()
@@ -46,5 +49,5 @@ def trapezoidal_method_vis(f, a, b, step):
     return fig
 
 
-print("This is Trapezoidal method", trapezoidal_method(f, 0, 2, 0.1))
-print("This is Trapezoidal method VISUALIZATION", trapezoidal_method_vis(f, 0, 2, 0.5))
+print("Trapezoidal method =>", trapezoidal_method(f, 0, 2, 0.1))
+print("Trapezoidal method VISUALIZATION", trapezoidal_method_vis(f, 0, 2, 0.5))
