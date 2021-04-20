@@ -96,3 +96,5 @@ def trapezoidal_method_vis(f, a, b, step):
 
 print("Zadanie 2 =>", trapezoidal_method(f, 0, 2, 0.1))
 print("Trapezoidal method VISUALIZATION", trapezoidal_method_vis(f, 0, 2, 0.5))
+
+# ------------------------#
