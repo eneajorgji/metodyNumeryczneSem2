@@ -148,4 +148,4 @@ def monte_carlo_vis(f, a, b, shots, step):
     return f_max * (b - a) * len(ind_below[0]) / shots
 
 
-print("Zadanie 3 Wizualizacja =>", monte_carlo_vis(f, 0, 2, 100, 0.01))
+print(monte_carlo_vis(f, 0, 2, 100, 0.01))
