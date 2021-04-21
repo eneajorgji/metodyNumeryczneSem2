@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 from scipy import optimize
 import scipy.integrate as integrate
 
@@ -9,6 +10,7 @@ import scipy.integrate as integrate
 
 def f(x):
     return x ** 3
+    # return np.sin(x)
 
 
 def rectangle_method(f, a, b, step):
@@ -35,15 +37,15 @@ def rectangle_method_vis(f, a, b, step):
     fig = plt.figure()
 
     plt.plot(X, Y)
-    plt.axvline(a, color='r', ls='--')
-    plt.axvline(b, color='r', ls='--')
+    plt.axvline(a, color='red', linestyle='--')
+    plt.axvline(b, color='red', linestyle='--')
     x_mid = (x[:-1] + x[1:]) / 2
     y_mid = f(x_mid)
     plt.plot(a, b)
-    plt.bar(x_mid, y_mid, width=(b - a) / period, facecolor='None', edgecolor='r', linewidth=1)
-    plt.title(f"Rectangle Method step = {step}")
+    plt.bar(x_mid, y_mid, width=(b - a) / period, facecolor='None', edgecolor='red', linewidth=1)
+    plt.title("Rectangle Method")
 
-    plt.grid(True, ls='--')
+    plt.grid(True, linestyle='--')
     plt.show()
     return fig
 
@@ -70,8 +72,8 @@ def trapezoidal_method(f, a, b, step):
 
 def trapezoidal_method_vis(f, a, b, step):
     fig = plt.figure()
-    plt.axvline(a, color='r', ls='--')
-    plt.axvline(b, color='r', ls='--')
+    plt.axvline(a, color='red', linestyle='--')
+    plt.axvline(b, color='red', linestyle='--')
 
     period = int((b - a) / step)
     x = np.linspace(a, b, period + 1)
@@ -88,13 +90,62 @@ def trapezoidal_method_vis(f, a, b, step):
         ys = [0, f(x[i]), f(x[i + 1]), 0]
         plt.fill(xs, ys, edgecolor='r', fill=None, linewidth=1)
 
-    plt.grid(True, ls='--')
+    plt.grid(True, linestyle='--')
+    plt.title("Trapezoidal method")
     plt.show()
 
     return fig
 
 
 print("Zadanie 2 =>", trapezoidal_method(f, 0, 2, 0.1))
-print("Trapezoidal method VISUALIZATION", trapezoidal_method_vis(f, 0, 2, 0.5))
+print(trapezoidal_method_vis(f, 0, 2, 0.5))
 
-# ------------------------#
+
+########################################
+# Zadanie 3
+
+def monte_carlo(f, a, b, shots, step):
+    x = np.arange(a, b, step)
+    y = f(x)
+    f_max = max(y)
+
+    x_rand = a + np.random.random(shots) * (b - a)
+    y_rand = 0 + np.random.random(shots) * f_max
+
+    ind_below = np.where(y_rand < f(x_rand))
+    ind_above = np.where(y_rand >= f(x_rand))
+
+    return f_max * (b - a) * len(ind_below[0]) / shots
+
+
+print("Zadanie 3 =>", monte_carlo(f, 0, 2, 10000, 0.1))
+
+
+########################################
+# Zadanie 3 + wizualizacje
+
+def monte_carlo_vis(f, a, b, shots, step):
+    x = np.arange(a, b + step, step)
+    y = f(x)
+    f_max = max(y)
+
+    x_rand = a + np.random.random(shots) * (b - a)
+    y_rand = 0 + np.random.random(shots) * f_max
+
+    ind_below = np.where(y_rand < f(x_rand))
+    ind_above = np.where(y_rand >= f(x_rand))
+
+    plt.plot(x, y, color='blue')
+    plt.scatter(x_rand[ind_below], y_rand[ind_below], color='green')
+    plt.scatter(x_rand[ind_above], y_rand[ind_above], color='red')
+
+    plt.gca().add_patch(Rectangle((a, f(a)), b, f(b), linewidth=2, edgecolor='black', linestyle='--', facecolor='none'))
+
+    plt.grid(True, linestyle='--')
+    plt.title("Monte-Carlo")
+    plt.show()
+
+    return f_max * (b - a) * len(ind_below[0]) / shots
+
+
+print("Zadanie 3 Wizualizacja =>", monte_carlo_vis(f, 0, 2, 100, 0.01))
