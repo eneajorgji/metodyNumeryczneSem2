@@ -1,53 +1,41 @@
 import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib.patches import Rectangle
-import numpy as np
-import matplotlib.pyplot as plt
+import scipy as sci
 
 
-def f(x):
-    return x ** 3
+def X_acc_linalg_solve(A, b):
+    return np.linalg.solve(A, b)
 
 
-def monte_carlo(f, a, b, shots, step):
-    x = np.arange(a, b + step, step)
-    y = f(x)
-    f_max = max(y)
+def jacobi_method(A, b, iter_limit=10, x=None):
+    # wyznacz macierze D
+    diagonal = np.diagonal(A)
 
-    x_rand = a + np.random.random(shots) * (b - a)
-    y_rand = 0 + np.random.random(shots) * f_max
+    # wyznacz marcierze D ** -1
+    inverse = np.linalg.inv(diagonal)
+    print(inverse)
+    # wyznacz marcierze L and U
+    L_and_U = sci.linalg.lu(a)
 
-    ind_below = np.where(y_rand < f(x_rand))
-    ind_above = np.where(y_rand >= f(x_rand))
-
-    return f_max * (b - a) * len(ind_below[0]) / shots
-
-
-print(monte_carlo(f, 0, 2, 10000, 0.1))
+    return diagonal * (b - L_and_U * x)
 
 
-def monte_carlo_vis(f, a, b, shots, step):
-    x = np.arange(a, b + step, step)
-    y = f(x)
-    f_max = max(y)
+if __name__ == '__main__':
+    A = np.array([[50, 2, 8, 4],
+                  [6, 41, 7, 4, ],
+                  [4, 9, 47, 10],
+                  [2, 6, 6, 48]])
+    b = np.array([68,
+                  139,
+                  115,
+                  -16])
+    x0 = np.array([1,
+                   1,
+                   1,
+                   1])
 
-    x_rand = a + np.random.random(shots) * (b - a)
-    y_rand = 0 + np.random.random(shots) * f_max
+    result_1 = jacobi_method(A, b, x=x0)
+    print("def jacobi_method", result_1)
 
-    ind_below = np.where(y_rand < f(x_rand))
-    ind_above = np.where(y_rand >= f(x_rand))
+    result_2 = X_acc_linalg_solve(A, b)
+    print("Rozwiazanie z Linalg.solve", result_2)
 
-    plt.plot(x, y, color='blue')
-    plt.scatter(x_rand[ind_below], y_rand[ind_below], color='green')
-    plt.scatter(x_rand[ind_above], y_rand[ind_above], color='red')
-
-    plt.gca().add_patch(Rectangle((a, f(a)), b, f(b), linewidth=2, edgecolor='black', linestyle='--', facecolor='none'))
-
-    plt.grid(True, linestyle='--')
-    plt.title("Monte-Carlo")
-    plt.show()
-
-    return f_max * (b - a) * len(ind_below[0]) / shots
-
-
-print("Zadanie 3 Wizualizacja =>", monte_carlo_vis(f, 0, 2, 100, 0.01))
