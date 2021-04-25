@@ -11,7 +11,6 @@ def jacobi_method(A, b, iter_limit=100, x=None):
 
     diagonal = np.diag(A)
     left_and_right = A - np.diagflat(diagonal)
-    # print("This is R =>", R)
 
     for i in range(iter_limit):
         x = (1 / diagonal) * (b - np.dot(left_and_right, x))
